@@ -90,13 +90,51 @@
     * 当你利用索引直接设置一个项时，vue不会为我们自动更新。
     * 当你修改数组的长度时，vue不会为我们自动更新。
 
+##########################################################
+##########################################################
 
-
-
-
-
-
-
+1. vue-life-cycle
+    共10个生命周期函数
+    new Vue()
+    |________________beforeCreate
+    |
+    Observe data
+    |
+    Init Events
+    |________________created
+    |
+    Has 'el' option ?  -------->|
+    |                           |
+    |                           |
+    Has 'template'              when vm.$mount(el)
+    option         <------------  is called
+    |
+    |-------------------------->
+    |                           |
+    |yes                        |no
+    compile template            compile el's outerHTML 
+    into render function          as template
+    |                           |
+    ---------<------------------
+    |________________beforeMount
+    |
+    create vm.$el and repalace "el" with it
+    |________________mounted
+    |
+    Mounted   ---> when data changes ---________beforeUpdate
+    |    ^                             |
+    |    |                           Virtual Dom re-render
+    |    |                            and patch
+    |    |                             |
+    |    |----------<-------------------________ updated
+    |
+    |when vm.$destroy() is called
+    |
+    |________________beforeDestroy
+    |
+    Tear down watchers, child components and event listeners
+    |
+    Destroyed ________________destroyed
 
 
 
