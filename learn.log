@@ -96,12 +96,12 @@
 1. vue-life-cycle
     共10个生命周期函数
     new Vue()
-    |________________beforeCreate
+    |________________ beforeCreate
     |
     Observe data
     |
     Init Events
-    |________________created
+    |________________ created
     |
     Has 'el' option ?  -------->|
     |                           |
@@ -116,12 +116,12 @@
     into render function          as template
     |                           |
     ---------<------------------
-    |________________beforeMount
+    |________________ beforeMount
     |
     create vm.$el and repalace "el" with it
-    |________________mounted
+    |________________ mounted
     |
-    Mounted   ---> when data changes ---________beforeUpdate
+    Mounted   ---> when data changes ---________ beforeUpdate
     |    ^                             |
     |    |                           Virtual Dom re-render
     |    |                            and patch
@@ -130,11 +130,11 @@
     |
     |when vm.$destroy() is called
     |
-    |________________beforeDestroy
+    |________________ beforeDestroy
     |
     Tear down watchers, child components and event listeners
     |
-    Destroyed ________________destroyed
+    Destroyed ________________ destroyed
 
 
 source: http://jspang.com/2017/03/14/vue2_02/
