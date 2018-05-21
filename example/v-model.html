@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>
+        v-model
+    </h1>
+    <hr>
+
+    <div id="app">
+        <p>文本： {{message}}</p>
+        <p>v-model: <input type="text" v-model.number="message"> </p>
+        <img v-bind:src="imgSrc" width="200px">
+    </div>
+
+    <script>
+    var app = new Vue({
+        el:"#app",
+        data:{
+            message:"Hello world!",
+            imgSrc:"https://cn.vuejs.org/images/logo.png"
+
+        }
+    })
+    </script>
+</body>
+</html>

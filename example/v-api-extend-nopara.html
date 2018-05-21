@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>无参自定义标签</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+
+<body>
+    <h1>vue.extend 扩展实例构造器</h1>
+    <hr>
+    <author></author>
+    <hr>
+    <h5>挂载扩展到已有div上</h5>
+    <div id='author2'></div>
+    <script>
+        var authorExtend = Vue.extend({
+            template: "<p><a :href='authorUrl'>{{authorName}}</a></p>",
+            data: function () {
+                return {
+                    authorName: 'winli',
+                    authorUrl: 'http://www.jspang.com'
+                }
+            }
+        });
+        //挂载扩展实例构造器 方法1
+        new authorExtend().$mount('author');
+        // 将扩展实例挂载到已有的DOM对象上
+        new authorExtend().$mount('#author2');
+    </script>
+</body>
+
+</html>

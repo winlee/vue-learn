@@ -1,0 +1,125 @@
+#2018-05-21
+1. live-server 8080 端口被占用
+    修改live-server安装文件夹内的index.js的 默认端口
+    C:\Users\[username]\AppData\Roaming\npm\node_modules\live-server
+
+2. v-if 和v-show的区别：
+    v-if： 判断是否加载，可以减轻服务器的压力，在需要时加载。
+    v-show：调整css dispaly属性，可以使客户端操作更加流畅。
+3. v-model修饰符
+    .lazy：取代 imput 监听 change 事件。
+    .number：输入字符串转为数字。
+    .trim：输入去掉首尾空格。
+
+4. v-bind 经常用于绑定css样式
+   v-on:click -> @click 缩写
+   v-bind:href -> :href 缩写
+5. v-pre 跳过vue编译
+6. v-cloak 在vue渲染完指定的整个DOM后才进行显示。它必须和CSS样式一起使用，
+    [v-cloak]{
+        display:none;
+    }
+7. v-once 在第一次DOM时进行渲染，渲染完成后视为静态内容，跳出以后的渲染过程。
+#########################################
+
+1. v-directive
+    Vue.directive('指令名',function(el, binding, vnode){
+    });
+    Vue.directive('指令名',{
+        bind:function(el,binding){
+        },
+        ...
+    });
+    el: 指令所绑定的元素，可以用来直接操作DOM。
+    binding:  一个对象，包含指令的很多信息。
+    vnode: Vue编译生成的虚拟节点。
+2. 自定义指令有五个生命周期（也叫钩子函数）
+    bind:只调用一次，指令第一次绑定到元素时调用，用这个钩子函数可以定义一个绑定时执行一次的初始化动作。
+    inserted:被绑定元素插入父节点时调用（父节点存在即可调用，不必存在于document中）。
+    update:被绑定于元素所在的模板更新时调用，而无论绑定值是否变化。通过比较更新前后的绑定值，可以忽略不必要的模板更新。
+    componentUpdated:被绑定元素所在模板完成一次更新周期时调用。
+    unbind:只调用一次，指令与元素解绑时调用。
+
+3. vue.extend
+    Vue.extend 返回的是一个“扩展实例构造器”,也就是预设了部分选项的Vue实例构造器。
+    经常服务于Vue.component用来生成组件，可以简单理解为当在模板中遇到该组件名称
+    作为标签的自定义元素时，会自动调用“扩展实例构造器”来生产组件实例，并挂载到自定义元素上。
+
+4. 自定义无参数标签
+   ## 我们想象一个需求，需求是这样的，要在博客页面多处显示作者的网名，
+   ## 并在网名上直接有链接地址。我们希望在html中只需要写<author></author> ，
+   ## 这和自定义组件很像，但是他没有传递任何参数，只是个静态标签。
+    var authorExtend = Vue.extend({
+        template:"<p><a :href='authorUrl'>{{authorName}}</a></p>",
+        data:function(){
+        return{
+            authorName:'winli',
+            authorUrl:'http://www.jspang.com'
+            }
+        }
+    });
+    ## 这时html中的标签还是不起作用的，因为扩展实例构造器是需要挂载的，
+    ## 我们再进行一次挂载。
+    new authorExtend().$mount('author');
+
+5. vue.set 
+    Vue.set 的作用就是在构造器外部操作构造器内部的数据、属性或者方法。
+    比如在vue构造器内部定义了一个count为1的数据，我们在构造器外部定义了一个方法，
+    要每次点击按钮给值加1.就需要用到Vue.set。
+
+    Tips: 在外部改变数据的三种方法
+        var outDate = {
+                count:1,
+                goodName:'car'
+        }
+        var app = new Vue({
+            el:'#app',
+            data:outData
+        })
+        1. Vue.set 改变
+            function add(){
+                Vue.set(outData, 'count', 4);
+            }
+        2. 使用Vue对象的方法添加
+            app.count++;
+        3. 直接操作外部数据
+            outData.count++;
+
+    Vue.set 的存在
+    由于Javascript的限制，Vue不能自动检测以下变动的数组。
+    * 当你利用索引直接设置一个项时，vue不会为我们自动更新。
+    * 当你修改数组的长度时，vue不会为我们自动更新。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+    "query": {
+      "term": {
+        "userId": {
+          "value": "564ff3af2c8998dd5a523a27"
+        }
+      }
+    }
+  }

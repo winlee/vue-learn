@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>directive</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div v-changecolor="color" id="demo">
+            {{num}}
+        </div>
+        <div>
+            <button @click="add">Add</button>
+        </div>
+    </div>
+    <script>
+        // Vue.directive('changecolor',function(el,binding ,vnode){
+        //     el.style = 'color:'+binding.value;
+        //     console.log(el);
+        //     console.log(binding);
+        //     console.log(vnode);
+        // })
+        Vue.directive('changecolor',{ 
+            bind:function(el,binding){ 
+              
+                //绑定
+                console.log('1 - bind'); 
+            }, 
+            inserted:function(){
+                //绑定到节点
+                console.log('2- inserted');
+            }, 
+            update:function(el, binding){
+                el.style = 'color:'+binding.value;
+                console.log('3 - update'); 
+                // el.style = 'color:'+binding.value;
+            }, 
+            componentUpdated:function(){
+                //组件更新完成 
+                console.log('4- componentUpdated'); 
+            }, 
+            unbind:function(){
+                //解绑 
+                console.log('5 - unbind'); 
+            } 
+        })
+        var app = new Vue({
+            el:'#app',
+            data:{
+                num:10,
+                color:'red'
+            },
+            methods:{
+                add: function(){
+                    this.num++;
+                }
+            }
+        })
+        
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-for</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+
+<body>
+    <h1>v-for</h1>
+    <hr>
+    <div id="app">
+        <ul>
+            <li v-for="item in items">
+                {{item}}
+            </li>
+        </ul>
+
+        <ul>
+            <li v-for="item in sortItems">
+                {{item}}
+            </li>
+        </ul>
+
+        <ul>
+            <li v-for="(student,index) in sortStudents">
+                {{index}} : {{student.name}} - {{student.age}}
+            </li>
+        </ul>
+        <hr>
+       {{}} <span>{{message}}</span> <br>
+       v-text:  <span v-text="message"></span> <br>
+       v-html:  <span v-html="msgHtml"></span>
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                items: [26, 232, 23, 213, 1231, 23],
+                students:[
+                    {name:'jspang',age:32},
+                    {name:'Panda',age:30},
+                    {name:'PanPaN',age:21},
+                    {name:'King',age:45}
+                ],
+                message:"hello vue",
+                msgHtml:"<h2>Hello Vue!</h2>"
+
+            },
+            computed: {
+                sortItems: function () {
+                    return this.items.sort(sortNumber);
+                },
+                sortStudents:function(){
+                    return sortByKey(this.students, 'age');
+                }
+            }
+        })
+
+        function sortByKey(array, key){
+            return array.sort(function(a,b){
+                var x = a[key];
+                var y = b[key];
+                return x<y ? -1 : (x>y ? 1 : 0);
+            })
+        }
+
+        function sortNumber(a, b) {
+            return a - b;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-bind</title>
+    <script src="../assets/js/vue.js"></script>
+    <style>
+    .class1{
+        color:red;
+    }
+    .class2{
+        color:aqua;
+    }
+    .class3{
+        color:blue;
+    }
+    .class4{
+        color:yellow;
+    }
+    [v-cloak] {
+        display:none;
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div :class="class1">1. 绑定class1</div>
+        <div :class="{class2:isOk}">2. 绑定class中的判断</div>
+        <div :style="{color:red, fontSize:font}"> 5. 绑定style</div>
+
+        <!-- 写法1 -->
+        <!-- <div v-bind:style="styleObject">5.绑定style</div> -->
+        <!-- 写法2 -->
+        <div :style="styleObject">6.用对象绑定style</div>
+        <div v-cloak>
+            {{class1}}
+        </div>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                styleObject:{
+                    fontSize:'24px',
+                    color:'green'
+                },
+                red:'red',
+                class1:"class1",
+                isOk:true
+            }
+        })
+    </script>
+</body>
+</html>
