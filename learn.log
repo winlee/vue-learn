@@ -52,9 +52,9 @@
     var authorExtend = Vue.extend({
         template:"<p><a :href='authorUrl'>{{authorName}}</a></p>",
         data:function(){
-        return{
-            authorName:'winli',
-            authorUrl:'http://www.jspang.com'
+            return{
+                authorName:'winli',
+                authorUrl:'http://www.jspang.com'
             }
         }
     });
@@ -121,12 +121,12 @@
     create vm.$el and repalace "el" with it
     |________________ mounted
     |
-    Mounted   ---> when data changes ---________ beforeUpdate
+    Mounted   ---> when data changes ---________________ beforeUpdate
     |    ^                             |
     |    |                           Virtual Dom re-render
     |    |                            and patch
     |    |                             |
-    |    |----------<-------------------________ updated
+    |    |----------<-------------------________________ updated
     |
     |when vm.$destroy() is called
     |
@@ -138,6 +138,142 @@
 
 
 source: http://jspang.com/2017/03/14/vue2_02/
+
+
+
+##############################################################
+1. Template 写法
+    1. 直接写在选项里的模板
+    var app=new Vue({
+        el:'#app',
+        data:{
+            message:'hello Vue!'
+        },
+        template:`
+            <h1 style="color:red">我是选项模板</h1>
+        `
+    })
+    2. 写在<template>标签里
+    <template id="demo3">
+        <h2 style="color:red">我是template标签模板</h2>
+    </template >
+
+    var app = new Vue({
+        template: "#demo3"
+    })
+
+    3. 写在<script>标签里 PS：可以让模板文件从外部引入。 通过src:""
+    <script type="x-template" id="demo3">
+        <h2 style="color:red">我是script标签模板</h2>
+    </script>
+
+    var app = new Vue({
+        template: "#demo3"
+    })
+
+## Components组件 #################################################################
+0. component 制作自定义标签，这些标签是html中没有的
+1. 全局化注册组件
+    全局化就是在构造器的外部用Vue.component来注册
+     //注册全局组件
+     Vue.component('win',{
+         template:`<div style="color:red;">全局化注册的win标签</div>`
+     })
+     //调用，直接使用html标签一样使用
+2. 局部标签
+    new Vue({
+      components:{
+        "panda":{
+            template:`<div></div`
+        }
+      }
+    })
+3. 组件与指令的区别
+   组件注册的是一个标签，而指令注册的是已有标签里的一个属性。在实际开发中我们还是用组件比较多，
+   指令用的比较少。因为指令看起来封装的没那么好
+
+4. Components 的 props 属性设置
+    props选项就是设置和获取标签上的属性值的，比如自定义标签<panda here="china"> 
+    那么 here 就需要在props添加，表示为panda标签的属性
+
+    4.1. 定义属性并获取属性值
+    使用props定义属性，加上数组形式的属性名称 如 props: ['here'], 组件内读取属性值通过插值 {{here}}
+
+     var app=new Vue({
+            el:'#app',
+            components:{
+                "panda":{
+                    template:`<div style="color:red;">Panda from {{ here }}.</div>`,
+                    props:['here']
+                }
+            }
+        })
+    4.2 属性中带有 ‘-’ 连接符的处理方式
+    如下属性from-here, 在组件的props中，需要采用驼峰式写法props: ['fromHere']才行
+    <panda from-here='china'></panda>
+    
+    4.3 在构造器内向组件中传值
+    <panda v-bind:here="message"></panda>
+
+    #4.4 根据不同需求显示不同的组件，如下 
+    <component v-bind:is="who"></component>
+    其中 who为 组件名称 如下
+        new Vue({
+            data:{
+                who:'componentA'
+            }
+        })
+    可以通过修改who的值，指定显示不同的组件
+####################################################################
+
+1. 全局扩展的数据传递 propsData option
+    propsData 不是和属性有关，他用在全局扩展时进行传递数据。
+
+        var  header_a = Vue.extend({
+           template:`<p>{{message}}</p>`,
+           data:function(){
+               return {
+                   message:'Hello,I am Header'
+               }
+           }
+       }); 
+       new header_a().$mount('header');
+    
+    三步传值：
+    1. 在全局扩展里加上props,进行接收 propsData:{a:1}
+    2. 传递时用propsData进行传递  props:['a']
+    3. 用插值的形式写入模板   {{a}}
+        var  header_a = Vue.extend({
+            template:`<p>{{message}}-{{a}}</p>`,
+            data:function(){
+                return {
+                    message:'Hello,I am Header'
+                }
+            },
+            props:['a']
+        }); 
+        new header_a({propsData:{a:1}}).$mount('header');
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

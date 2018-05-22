@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-component-1</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>component-1 </h1>
+    <hr>
+    <div id="app">
+        <win></win>
+        <panda from-here="message"></panda>
+        <!-- 方式3 在构造器内向组件传值 -->
+        <panda v-bind:from-here="message"></panda>
+
+        <hr>
+        <h2>父子嵌套组件</h2>
+        <hr>
+        <nestwin></nestwin>
+    </div>
+
+    <script>
+        var city = {
+            template:`<span style="color:red">SiChuan of China</span>`
+        }
+        var nestwin = {
+            template:`<div style="color:green;border:1px solid">
+                        <span>panda from </span> <city></city>
+                      </div>`,
+            components:{
+                'city':city
+            }
+        }
+
+        var win = {
+            template:`<div style="color:blue">panda from china</div>`
+        }
+
+        //方式一： 注册全局组件  
+        // Vue.component('win',{
+        //     template:'<div style="color:red">全局化的win标签</div>'
+        // })
+        var app = new Vue({
+            el:"#app",
+            data:{
+                message:"SiChuan"
+            },
+            components:{
+                "panda":{
+                    //局部组件
+                    template:`<div style="color:green">局部注册的panda from {{fromHere}}</div>`,
+                    //设置组件属性
+                    props:['fromHere']
+
+                },
+                'win':win,
+                'nestwin':nestwin
+            }
+        })
+    </script>
+</body>
+</html>
