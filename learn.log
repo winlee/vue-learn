@@ -254,10 +254,10 @@ source: http://jspang.com/2017/03/14/vue2_02/
         }); 
         new header_a({propsData:{a:1}}).$mount('header');
     
-    
 
 
 
+e683d4f97ba94f6597e101277fd4bce1
 
 
 
